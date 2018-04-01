@@ -1,0 +1,54 @@
+// Styles for blocks.
+// -----------------------------------------------------------------------------
+.elargy-post-media {
+  .view-news-masonry-listing & {
+    display: block;
+    position: relative;
+
+    .elargy-post-link {
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background-color: rgba(255,255,255,.7);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .5s, visibility .5s ease-in-out;
+    }
+
+    .elargy-post-featured-image {
+      display: block;
+      margin: auto;
+      width: 100%;
+    }
+
+    &:hover,
+    &:focus {
+      .elargy-post-link {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.elargy-post-body {
+  .view-news-masonry-listing & {
+    padding: 20px 10px;
+    display: block;
+    position: relative;
+    background-color: white;
+
+    .elargy-post-meta {
+      font-style: italic;
+      font-size: $font-size-small;
+    }
+
+    .elargy-post-title {
+      font-size: 24px;
+      font-weight: 300;
+
+      a {
+        color: $gray-darker;
+      }
+    }
+  }
+}

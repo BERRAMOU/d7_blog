@@ -1,0 +1,54 @@
+<?php
+/**
+ * @file
+ * Code for the News feature.
+ */
+
+include_once 'news.features.inc';
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function news_theme_registry_alter(&$theme_registry)
+{
+    // Defined path to the current module.
+    $module_path = drupal_get_path('module', 'news') . "/templates";
+    // Find all .tpl.php files in this module's folder recursively.
+    $template_file_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
+    // Iterate through all found template file objects.
+    foreach ($template_file_objects as $key => $template_file_object) {
+        // If the template has not already been overridden by a theme.
+        if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+            // Alter the theme path and template elements.
+            $theme_registry[$key]['theme path'] = $module_path;
+            $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
+            $theme_registry[$key]['type'] = 'module';
+        }
+    }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function news_preprocess_node(&$variables)
+{
+    /// set url node
+    $variables['node_url'] = drupal_get_path_alias('node/' . $variables['nid']);
+
+    $user = user_load($variables['uid']);
+
+    //// Check if und present
+    if (isset($user->field_name['und'])) {
+        $user->field_name = $user->field_name['und'];
+    }
+    //// Check if und present
+    if (isset($user->field_last_name['und'])) {
+        $user->field_last_name = $user->field_last_name['und'];
+    }
+    /// fill name ot author
+    $variables['name'] = isset($user->field_name[0]['value']) ? $user->field_name[0]['value'] : '';
+    /// fill last name ot author
+    $variables['last_name'] = isset($user->field_last_name[0]['value']) ? $user->field_last_name[0]['value'] : '';
+    $variables['date_created'] = date("d-m-Y", $variables['created']);
+
+}

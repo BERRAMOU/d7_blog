@@ -1,0 +1,20 @@
+// Helpers
+// -----------------------------------------------------------------------------
+body {
+  font-family: $font-family-default;
+  font-size: $font-size-base;
+  background-color: #efefef;
+  color: $gray-darker;
+}
+
+a {
+  color: #dedede;
+  outline: none;
+  transition: color .3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    color: $gray-darker;
+    text-decoration: none;
+  }
+}
